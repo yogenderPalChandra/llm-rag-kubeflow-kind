@@ -1,2 +1,2 @@
-./rag_pipeline/db/*
-./rag_pipeline/__pycache__/*
+rag_pipeline/db/*
+rag_pipeline/__pycache__/*
