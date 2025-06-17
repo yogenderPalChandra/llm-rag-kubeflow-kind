@@ -1,0 +1,19 @@
+containers:
+  - name: ollama
+    image: ollama/ollama:latest
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        echo "[INFO] Starting ollama serve in background..." && \
+        ollama serve > /tmp/ollama.log 2>&1 & \
+        until curl -s http://localhost:11434/api/tags > /dev/null; do \
+          echo "[INFO] Waiting for ollama to be ready..."; sleep 2; \
+        done && \
+        echo "[INFO] Pulling llama3..." && \
+        ollama pull llama3 && \
+        echo "[INFO] Restarting Ollama server in foreground..." && \
+        pkill ollama && \
+        sleep 2 && \
+        ollama serve
+    ports:
+      - containerPort: 11434

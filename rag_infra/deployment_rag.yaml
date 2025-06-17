@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-agent
+  namespace: ollama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag-agent
+  template:
+    metadata:
+      labels:
+        app: rag-agent
+    spec:
+      containers:
+      - name: rag-agent
+        image: yogender027/rag-agent:v4
+        ports:
+        - containerPort: 8080
+        env:
+          - name: OLLAMA_HOST
+            value: http://ollama-service.ollama.svc.cluster.local:11434
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-agent
+  namespace: ollama
+spec:
+  selector:
+    app: rag-agent
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

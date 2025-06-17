@@ -1,2 +1,4 @@
 rag_pipeline/db/*
 rag_pipeline/__pycache__/
+agent_tools/main.py
+agent_tools/__pycache__/*
